@@ -30,6 +30,38 @@ public class GestorEstudiantes
 	public ArrayList<Estudiante> listaEstudiantes()
 	{
 		ArrayList<Estudiante> a = new ArrayList<Estudiante>();
+
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM students");
+		}
+		catch (SQLException e)
+		{
+			System.err.print("No hay datos en la tabla");
+		}
+		String rsid = null;
+		String rsnombre = null;
+		String rsciudad = null;
+		String rstfno = null;
+		Date rsfecha = null;
+		int rscode = 0;
+		
+		try {
+			while (rs.next())
+			{
+				rsid = rs.getString("Id");
+				rsnombre = rs.getString("Nombre");
+				rsciudad = rs.getString("Ciudad");
+				rstfno = rs.getString("Telefono");
+				rsfecha = rs.getDate("FechaNacmto");
+				rscode = rs.getInt("DegreeCode");
+			}
+		} catch (SQLException e) {
+			// TODO Bloque catch generado automáticamente
+			e.printStackTrace();
+		}
+		Estudiante E1 = new Estudiante (rsid,rsnombre,rsciudad,rstfno,rsfecha,rscode);
+		a.add(E1);
 		return a;
 	}
 	public Estudiante buscarEstudiante (String id)
